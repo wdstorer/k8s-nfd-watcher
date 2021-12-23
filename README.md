@@ -6,9 +6,9 @@ This controller requires that these 2 plugins are installed and configured in th
 * [Node Feature Discovery](https://github.com/kubernetes-sigs/node-feature-discovery) - Customizable Kubernetes add-on that will dynamically add corresponding labels to nodes when a device is connected.
 * [Smarter-Device-Manager](https://gitlab.com/arm-research/smarter/smarter-device-manager) - Registers devices with the Kubernetes device plugin framework to advertise system hardware resources to the kubelet.
 
-## Current use cases:
-* To automatically restart smarter-device-manager whenever a new device is connected to a node so that it is registered as an available node resource. Smarter-Device-Manager, on it's own, requires a manual restart to detect new devices.
-* To delete pods whenever a node resource, that the pod has allocated, has been connected or disconnected.
+## Use cases:
+* Automatically restart smarter-device-manager whenever a new device is connected to a node so that it is registered as an available node resource. Smarter-Device-Manager, on it's own, requires a manual restart to detect new devices.
+* Delete a pod if a hardware resource the pod has requested, has been connected or disconnected.
 
 ## How it works:
 When node-feature-discovery automatically adds or removes a label, nfd-watcher will delete all smarter-device-manager pods. This will trigger smarter-device-manager to relaunch, scan for new devices, and update the allocatable resources on the nodes. nfd-watcher will then detect these changes to allocatable resources and optionally restart any pods that have requested a node resource managed by smarter-device-manager.
