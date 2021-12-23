@@ -1,0 +1,4 @@
+label_pattern: '^feature.node.kubernetes.io/'
+allocatable_pattern: '^smarter-devices'
+smarter_device_label: 'name=smarter-device-manager'
+delete_pods_label: 'nfd-watcher-change-detected=delete'

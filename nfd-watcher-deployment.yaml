@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfd-watcher
+  labels:
+    app: nfd-watcher
+spec:
+  selector:
+    matchLabels:
+      app: nfd-watcher
+  template:
+    metadata:
+      labels:
+        app: nfd-watcher
+    spec:
+      serviceAccountName: nfd-watcher
+      containers:
+      - name: proxycontainer
+        image: wdstorer/kubectl-proxy:1.0.0
+        command: ["kubectl","proxy","--port=8001"]
+      - name: app
+        image: wdstorer/nfd-watcher:0.1.30
+        env:
+          - name: res_namespace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
